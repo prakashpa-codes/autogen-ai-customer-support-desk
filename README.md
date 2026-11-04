@@ -368,7 +368,7 @@ docker compose up --build
 
 The compose file carries Traefik labels. With Traefik already running on the server (`websecure` entrypoint, `letsencrypt` resolver):
 
-1. Point a DNS record for `PUBLIC_HOST` (default `dadasports.labspace.tech`) at the server.
+1. Point a DNS record for your domain at the server and set it as `PUBLIC_HOST` in `.env`.
 2. Copy the repository and a production `.env` to the server (set `APP_ENV=production`, a strong `SECRET_KEY` and your own password hash).
 3. Run `docker compose up -d --build`.
 

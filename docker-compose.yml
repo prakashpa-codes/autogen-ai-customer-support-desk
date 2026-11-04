@@ -27,7 +27,7 @@ services:
       - "127.0.0.1:${SHOP_PORT:-8090}:8000"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.resolvedesk-shop.rule=Host(`${PUBLIC_HOST:-dadasports.labspace.tech}`)
+      - traefik.http.routers.resolvedesk-shop.rule=Host(`${PUBLIC_HOST:-localhost}`)
       - traefik.http.routers.resolvedesk-shop.entrypoints=websecure
       - traefik.http.routers.resolvedesk-shop.tls.certresolver=letsencrypt
       - traefik.http.services.resolvedesk-shop.loadbalancer.server.port=8000
@@ -44,7 +44,7 @@ services:
     labels:
       # The longer rule (Host + PathPrefix) wins over the storefront router for /dashboard.
       - traefik.enable=true
-      - traefik.http.routers.resolvedesk-desk.rule=Host(`${PUBLIC_HOST:-dadasports.labspace.tech}`) && PathPrefix(`/dashboard`)
+      - traefik.http.routers.resolvedesk-desk.rule=Host(`${PUBLIC_HOST:-localhost}`) && PathPrefix(`/dashboard`)
       - traefik.http.routers.resolvedesk-desk.entrypoints=websecure
       - traefik.http.routers.resolvedesk-desk.tls.certresolver=letsencrypt
       - traefik.http.services.resolvedesk-desk.loadbalancer.server.port=8501
