@@ -1,0 +1,5 @@
+# Everything needed to run ResolveDesk locally (backend + dashboard) and its tests.
+# The Docker images install only their own part: requirements/backend.txt or requirements/desk.txt.
+-r requirements/backend.txt
+-r requirements/desk.txt
+-r requirements/dev.txt

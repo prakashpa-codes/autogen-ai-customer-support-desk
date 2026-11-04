@@ -1,0 +1,84 @@
+[
+  {
+    "id": "PDF-1", "group": "Reference", "channel": "Chat", "customer_name": "Rahul", "order_id": "",
+    "complaint": "Where is my order? It was supposed to arrive yesterday.",
+    "expected": {"category": ["Shipping"], "status": "Resolved", "sources": ["shipping_policy.md", "orders_and_cancellations.md"]}
+  },
+  {
+    "id": "PDF-2", "group": "Reference", "channel": "Chat", "customer_name": "Ananya", "order_id": "ORD-48213",
+    "complaint": "I want to return the shoes I bought last week. How do I get a refund?",
+    "expected": {"category": ["Refund"], "status": "Resolved", "sources": ["refund_policy.md"]}
+  },
+  {
+    "id": "PDF-3", "group": "Reference", "channel": "Chat", "customer_name": "Vikram", "order_id": "",
+    "complaint": "I forgot my password and can't log in.",
+    "expected": {"category": ["Account"], "status": "Resolved", "sources": ["account_and_login.md"]}
+  },
+  {
+    "id": "PDF-4", "group": "Reference", "channel": "Chat", "customer_name": "Meera", "order_id": "ORD-48877",
+    "complaint": "The blender I received is broken. Can I get a replacement?",
+    "expected": {"category": ["Product", "Refund"], "status": "Resolved", "sources": ["warranty_and_replacements.md"]}
+  },
+  {
+    "id": "PDF-5", "group": "Reference", "channel": "Chat", "customer_name": "Arjun", "order_id": "ORD-49012",
+    "complaint": "You charged my card three times! Fix this now or I'm contacting my bank and a lawyer.",
+    "expected": {"category": ["Billing"], "urgency": "High", "sentiment": "Angry", "status": "Escalated", "sources": ["billing_and_payments.md"]}
+  },
+  {
+    "id": "PDF-6", "group": "Reference", "channel": "Chat", "customer_name": "Neha", "order_id": "",
+    "complaint": "Do you sell gift cards for a company of 500 employees with custom branding?",
+    "expected": {"category": ["Other", "Product"], "status": "Escalated", "no_match": true, "sources": []}
+  },
+  {
+    "id": "OWN-1", "group": "Own", "channel": "Chat", "customer_name": "Sourav", "order_id": "ORD-50231",
+    "complaint": "My Dada Pro Grade 1 bat developed a crack on the edge after two weeks of nets. Is this covered under warranty?",
+    "expected": {"category": ["Product"], "status": "Resolved", "sources": ["warranty_and_replacements.md", "bat_care_and_services.md"]}
+  },
+  {
+    "id": "OWN-2", "group": "Own", "channel": "Chat", "customer_name": "Kavya", "order_id": "ORD-50410",
+    "complaint": "நான் வாங்கிய கிரிக்கெட் ஷூக்கள் சிறியதாக உள்ளன. இவற்றை பெரிய அளவுக்கு மாற்ற முடியுமா?",
+    "expected": {"category": ["Refund", "Product"], "status": "Resolved", "language": "Tamil", "sources": ["refund_policy.md", "resolved_cases.md"]}
+  },
+  {
+    "id": "OWN-3", "group": "Own", "channel": "Chat", "customer_name": "Debashis", "order_id": "ORD-50577",
+    "complaint": "আমার অর্ডার এখনও আসেনি। ডেলিভারির তারিখ তিন দিন আগে পেরিয়ে গেছে। কী করব?",
+    "expected": {"category": ["Shipping"], "status": "Resolved", "language": "Bengali", "sources": ["shipping_policy.md"]}
+  },
+  {
+    "id": "OWN-4", "group": "Own", "channel": "Email", "customer_name": "Karthik", "order_id": "ORD-50689",
+    "subject": "Refund for COD return",
+    "complaint": "Hello, I returned the DS Run Neo running shoes from my cash on delivery order last week. How will I receive my refund and how long will it take?",
+    "expected": {"category": ["Refund"], "status": "Resolved", "sources": ["refund_policy.md"]}
+  },
+  {
+    "id": "OWN-5", "group": "Own", "channel": "Chat", "customer_name": "Farhan", "order_id": "",
+    "complaint": "Someone placed an order from my account that I never made and used my saved card. Please help!",
+    "expected": {"category": ["Account", "Billing"], "status": "Escalated", "sources": ["account_and_login.md", "billing_and_payments.md"]}
+  },
+  {
+    "id": "OWN-6", "group": "Own", "channel": "Chat", "customer_name": "Lakshmi", "order_id": "ORD-50733",
+    "complaint": "My PowerBlend blender started smoking and sparking while I was using it and my hand got slightly burnt.",
+    "expected": {"category": ["Product"], "urgency": "High", "status": "Escalated", "sources": ["warranty_and_replacements.md"]}
+  },
+  {
+    "id": "OWN-7", "group": "Own", "channel": "Email", "customer_name": "Coach Iyer", "order_id": "",
+    "subject": "Bulk bats for our academy",
+    "complaint": "We run a cricket academy and want to buy 40 Kashmir willow bats for our juniors. What discount do you offer on a bulk order like this?",
+    "expected": {"category": ["Other", "Product", "Billing"], "status": "Resolved", "sources": ["team_and_academy_orders.md"]}
+  },
+  {
+    "id": "OWN-8", "group": "Own", "channel": "Chat", "customer_name": "Aditya", "order_id": "",
+    "complaint": "Can I buy the Bowl-O-Matic Lite bowling machine on no-cost EMI using my HDFC credit card?",
+    "expected": {"category": ["Billing", "Product"], "status": "Resolved", "sources": ["billing_and_payments.md"]}
+  },
+  {
+    "id": "OWN-9", "group": "Own", "channel": "Chat", "customer_name": "Pooja", "order_id": "",
+    "complaint": "How much does your bat knocking-in service cost and how long does it take?",
+    "expected": {"category": ["Product"], "status": "Resolved", "sources": ["bat_care_and_services.md"]}
+  },
+  {
+    "id": "OWN-10", "group": "Own", "channel": "Chat", "customer_name": "Imran", "order_id": "",
+    "complaint": "I'm not getting the OTP to log in. I've tried many times now.",
+    "expected": {"category": ["Account"], "status": "Resolved", "sources": ["account_and_login.md"]}
+  }
+]

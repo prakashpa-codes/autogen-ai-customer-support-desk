@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dada Sports · Cricket & Sports Store</title>
+  <meta name="description" content="Cricket bats, protective gear, footwear, apparel and fitness equipment. Gear up like a captain.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1.0.6">
+</head>
+<body>
+  <div class="announce">Free shipping on orders over ₹999 · Same-day dispatch before 2 PM · 30-day returns on footwear &amp; apparel</div>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="logo" href="#top" aria-label="Dada Sports home">
+        <span class="logo-mark">DS</span>
+        <span class="logo-text">DADA <b>SPORTS</b></span>
+      </a>
+      <nav class="main-nav" id="category-nav" aria-label="Categories"></nav>
+      <div class="header-actions">
+        <a href="#support" class="link-btn">Help</a>
+        <a href="/dashboard" class="link-btn subtle">Staff</a>
+        <button class="cart-btn" id="cart-btn" aria-label="Cart">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Chennai · since 2015</p>
+          <h1>Gear up like a captain.</h1>
+          <p class="lead">English willow hand-picked in our T. Nagar workshop, protective gear that passes the toughest standards, and everything you need from the nets to the gym.</p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#shop">Shop the range</a>
+            <button class="btn ghost" data-open-chat>Ask our support team</button>
+          </div>
+          <ul class="hero-points">
+            <li>6 stores · bat testing nets in every store</li>
+            <li>Professional knocking-in service · ₹799</li>
+            <li>Chat support 8 AM – 10 PM, every day</li>
+          </ul>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 320 320">
+            <defs>
+              <linearGradient id="willow" x1="0" x2="1"><stop offset="0" stop-color="#f3dcae"/><stop offset="1" stop-color="#e2bd7c"/></linearGradient>
+            </defs>
+            <circle cx="160" cy="160" r="150" fill="#0f2f57"/>
+            <circle cx="160" cy="160" r="118" fill="none" stroke="#e0a526" stroke-width="2" stroke-dasharray="4 8" opacity=".7"/>
+            <g transform="rotate(-35 160 160)">
+              <rect x="146" y="36" width="28" height="70" rx="10" fill="#1d1d1d"/>
+              <rect x="150" y="36" width="20" height="70" rx="8" fill="#e0a526" opacity=".85"/>
+              <path d="M136 104h48l6 150c0 14-12 24-30 24s-30-10-30-24z" fill="url(#willow)"/>
+              <path d="M160 112v156" stroke="#c99a52" stroke-width="2" opacity=".6"/>
+            </g>
+            <circle cx="230" cy="232" r="26" fill="#b3261e"/>
+            <path d="M210 216c14 10 26 22 36 34" stroke="#f5efe6" stroke-width="2" stroke-dasharray="3 3" fill="none"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" id="shop">
+      <div class="section-head">
+        <h2>Shop by category</h2>
+        <p>Prices include GST.</p>
+      </div>
+      <div class="chips" id="category-chips" role="tablist"></div>
+      <div class="grid" id="product-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="services">
+      <div class="wrap services-grid">
+        <div><h3>Knocking-in service</h3><p>Machine knocking plus hand finishing by our bat technicians. Ready to play in 3 business days.</p></div>
+        <div><h3>Team &amp; academy orders</h3><p>Sublimated jerseys with names and numbers, and team discounts up to 20% on bulk equipment.</p></div>
+        <div><h3>Captain's Club</h3><p>Earn a point on every ₹100. Captain tier members get free express shipping on every order.</p></div>
+      </div>
+    </section>
+
+    <section class="wrap support" id="support">
+      <div class="support-grid">
+        <div>
+          <h2>Customer support</h2>
+          <p>Questions about an order, a return or a product? Chat with us for an instant answer, or raise a ticket and we will reply by email.</p>
+          <ul class="contact-list">
+            <li><strong>Chat:</strong> 8:00 AM – 10:00 PM IST, every day</li>
+            <li><strong>Email:</strong> support@dadasports.labspace.tech · reply within 24 hours</li>
+            <li><strong>Phone:</strong> request a callback from chat · 9 AM – 9 PM, Mon–Sat</li>
+          </ul>
+          <button class="btn primary" data-open-chat>Start a chat</button>
+        </div>
+        <form class="ticket-form" id="ticket-form" novalidate>
+          <h3>Raise a support ticket</h3>
+          <div class="row">
+            <label>Name<input name="name" maxlength="100" autocomplete="name" required></label>
+            <label>Email<input name="email" type="email" maxlength="200" autocomplete="email" required></label>
+          </div>
+          <div class="row">
+            <label><span>Order ID <span class="opt">(optional)</span></span><input name="order_id" maxlength="40" placeholder="ORD-48213"></label>
+            <label>Subject<input name="subject" maxlength="200" required></label>
+          </div>
+          <label>How can we help?<textarea name="message" rows="4" maxlength="4000" required></textarea></label>
+          <button class="btn primary" type="submit">Submit ticket</button>
+          <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <div class="logo small"><span class="logo-mark">DS</span><span class="logo-text">DADA <b>SPORTS</b></span></div>
+        <p>Usman Road, T. Nagar, Chennai 600017</p>
+      </div>
+      <div><h4>Stores</h4><p>Chennai · Mumbai · Bengaluru · Delhi · Kolkata</p></div>
+      <div><h4>Policies</h4><p>Shipping · Returns &amp; refunds · Warranty</p></div>
+      <div><h4>Grievance officer</h4><p>grievance@dadasports.labspace.tech</p></div>
+    </div>
+    <p class="wrap copyright">© 2026 Dada Sports. All prices in INR.</p>
+  </footer>
+
+  <!-- Chat widget -->
+  <button class="chat-launcher" id="chat-launcher" data-open-chat aria-label="Open support chat">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    <span>Need help?</span>
+  </button>
+  <section class="chat-panel" id="chat-panel" aria-label="Support chat" hidden>
+    <header class="chat-head">
+      <div>
+        <strong>Dada Sports Support</strong>
+        <span>Instant answers from our policies</span>
+      </div>
+      <button class="icon-btn" id="chat-close" aria-label="Close chat">×</button>
+    </header>
+    <div class="chat-body" id="chat-body" aria-live="polite">
+      <div class="msg bot">Hi! I can help with orders, delivery, returns, payments, your account and our products. What do you need help with?</div>
+    </div>
+    <details class="chat-details">
+      <summary>Add your order details</summary>
+      <div class="row">
+        <input id="chat-name" placeholder="Your name" maxlength="100">
+        <input id="chat-order" placeholder="Order ID" maxlength="40">
+      </div>
+      <input id="chat-email" class="full" type="email" placeholder="Email used for the order (to see order details)" maxlength="200">
+    </details>
+    <form class="chat-input" id="chat-form">
+      <textarea id="chat-text" rows="1" placeholder="Type your message…" maxlength="4000" aria-label="Message"></textarea>
+      <button class="send-btn" type="submit" aria-label="Send">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-2.5-6.5z" fill="currentColor"/></svg>
+      </button>
+    </form>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=1.0.6"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{
+  "note": "Fictional Dada Sports orders. Dates are offsets in days from today (negative = in the past), so the data never goes stale.",
+  "orders": [
+    {
+      "order_id": "ORD-48213", "customer_name": "Ananya Rao", "email": "ananya.rao@example.com", "city": "Chennai 600017",
+      "placed": -10, "payment_method": "UPI", "status": "Delivered",
+      "items": [{"sku": "DS-SHO-402", "name": "Eden Rubber Stud Cricket Shoes", "variant": "UK 8", "qty": 1, "price": 3299}],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Delhivery", "tracking": "DLV7710482213", "dispatched": -10, "edd": -7, "delivered": -6}
+    },
+    {
+      "order_id": "ORD-48877", "customer_name": "Meera Krishnan", "email": "meera.k@example.com", "city": "Bengaluru 560038",
+      "placed": -4, "payment_method": "Credit card", "status": "Delivered",
+      "items": [{"sku": "DS-FIT-801", "name": "DS Fit BlendGo Portable Blender (380 ml)", "variant": "Graphite", "qty": 1, "price": 1799}],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Blue Dart", "tracking": "BD90148877", "dispatched": -4, "edd": -1, "delivered": -1}
+    },
+    {
+      "order_id": "ORD-49012", "customer_name": "Arjun Mehta", "email": "arjun.mehta@example.com", "city": "Mumbai 400053",
+      "placed": -2, "payment_method": "Credit card", "status": "Shipped",
+      "items": [{"sku": "DS-PRO-303", "name": "Dada Pro Batting Gloves", "variant": "Men, right hand", "qty": 1, "price": 2999}],
+      "shipping_fee": 0,
+      "payments": "3 card payment attempts on the order date: 1 captured for ₹2,999; 2 authorisations of ₹2,999 each pending release by the bank",
+      "shipment": {"courier": "Blue Dart", "tracking": "BD90149012", "dispatched": -1, "edd": 1}
+    },
+    {
+      "order_id": "ORD-50231", "customer_name": "Sourav Basu", "email": "sourav.basu@example.com", "city": "Kolkata 700016",
+      "placed": -18, "payment_method": "Credit card EMI (6 months, no-cost)", "status": "Delivered",
+      "items": [
+        {"sku": "DS-BAT-101", "name": "Dada Pro Grade 1 English Willow Bat", "variant": "Short Handle", "qty": 1, "price": 24999},
+        {"sku": "SERVICE-KNOCK", "name": "Knocking-in service", "variant": "", "qty": 1, "price": 799}
+      ],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Delhivery", "tracking": "DLV7710450231", "dispatched": -15, "edd": -12, "delivered": -13}
+    },
+    {
+      "order_id": "ORD-50410", "customer_name": "Kavya Raman", "email": "kavya.raman@example.com", "city": "Chennai 600040",
+      "placed": -7, "payment_method": "UPI", "status": "Delivered",
+      "items": [{"sku": "DS-SHO-403", "name": "Offside All-Rounder Cricket Shoes", "variant": "UK 6", "qty": 1, "price": 2499}],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Ekart", "tracking": "EK3302450410", "dispatched": -7, "edd": -5, "delivered": -4}
+    },
+    {
+      "order_id": "ORD-50577", "customer_name": "Debashis Ghosh", "email": "debashis.g@example.com", "city": "Kolkata 700091",
+      "placed": -9, "payment_method": "Debit card", "status": "Shipped",
+      "items": [
+        {"sku": "DS-ACC-602", "name": "Eden Duffle Kit Bag", "variant": "Navy", "qty": 1, "price": 2199},
+        {"sku": "DS-PRO-302", "name": "Eden Club Batting Pads", "variant": "Men", "qty": 1, "price": 2299}
+      ],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Delhivery", "tracking": "DLV7710450577", "dispatched": -8, "edd": -3,
+                   "last_scan": "In transit - Hoskote hub", "last_scan_day": -5}
+    },
+    {
+      "order_id": "ORD-50689", "customer_name": "Karthik Subramanian", "email": "karthik@example.com", "city": "Chennai 600017",
+      "placed": -16, "payment_method": "Cash on Delivery", "status": "Refund pending",
+      "items": [{"sku": "DS-SHO-404", "name": "DS Run Neo Running Shoes", "variant": "UK 9", "qty": 1, "price": 3999}],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Ekart", "tracking": "EK3302450689", "dispatched": -15, "edd": -12, "delivered": -12},
+      "return": {"requested": -8, "reason": "Size too big", "picked_up": -5, "qc_passed": -3,
+                 "refund": "Waiting for the customer's bank details (COD refunds are paid by NEFT, or instantly as Captain's Club credit)"}
+    },
+    {
+      "order_id": "ORD-50733", "customer_name": "Lakshmi Iyer", "email": "lakshmi.iyer@example.com", "city": "Chennai 600020",
+      "placed": -24, "payment_method": "UPI", "status": "Delivered",
+      "items": [{"sku": "DS-FIT-802", "name": "DS Fit PowerBlend 600 W Personal Blender", "variant": "", "qty": 1, "price": 3299}],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Blue Dart", "tracking": "BD90150733", "dispatched": -23, "edd": -21, "delivered": -21}
+    },
+    {
+      "order_id": "ORD-51007", "customer_name": "Rohit Das", "email": "rohit.das@example.com", "city": "Kolkata 700016",
+      "placed": -6, "payment_method": "UPI", "status": "Delivered",
+      "items": [{"sku": "DS-SHO-402", "name": "Eden Rubber Stud Cricket Shoes", "variant": "UK 8", "qty": 1, "price": 3299}],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Delhivery", "tracking": "DLV7710451007", "dispatched": -6, "edd": -3, "delivered": -3}
+    },
+    {
+      "order_id": "ORD-52001", "customer_name": "Rahul Nair", "email": "rahul.nair@example.com", "city": "Kochi 682016",
+      "placed": 0, "payment_method": "UPI", "status": "Confirmed",
+      "items": [{"sku": "DS-BAT-106", "name": "Captain Junior Kashmir Willow Bat", "variant": "Size 5", "qty": 1, "price": 1599}],
+      "shipping_fee": 79,
+      "shipment": {"edd": 5}
+    },
+    {
+      "order_id": "ORD-52100", "customer_name": "Imran Sheikh", "email": "imran.sheikh@example.com", "city": "Hyderabad 500034",
+      "placed": -3, "payment_method": "Cash on Delivery", "status": "Out for delivery",
+      "items": [{"sku": "DS-OTH-902", "name": "DS Court Carbon Badminton Racket", "variant": "", "qty": 1, "price": 2499}],
+      "shipping_fee": 49,
+      "shipment": {"courier": "Ekart", "tracking": "EK3302452100", "dispatched": -2, "edd": 0}
+    },
+    {
+      "order_id": "ORD-61234", "customer_name": "Meera Iyer", "email": "meera.iyer@example.com", "city": "Chennai 600028",
+      "placed": -14, "payment_method": "Credit card", "status": "Return picked up",
+      "items": [{"sku": "DS-SHO-404", "name": "DS Run Neo Running Shoes", "variant": "UK 6", "qty": 1, "price": 3999}],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Ekart", "tracking": "EK3302461234", "dispatched": -13, "edd": -10, "delivered": -10},
+      "return": {"requested": -5, "reason": "Too narrow", "picked_up": -2, "qc_passed": null, "refund": "Starts after the quality check"}
+    },
+    {
+      "order_id": "ORD-61299", "customer_name": "Lakshmi Narayanan", "email": "lakshmi.n@example.com", "city": "Chennai 600004",
+      "placed": -15, "payment_method": "Credit card", "status": "Refund initiated",
+      "items": [{"sku": "DS-SHO-404", "name": "DS Run Neo Running Shoes", "variant": "UK 7", "qty": 1, "price": 3999}],
+      "shipping_fee": 0,
+      "shipment": {"courier": "Delhivery", "tracking": "DLV7710461299", "dispatched": -14, "edd": -11, "delivered": -11},
+      "return": {"requested": -8, "reason": "Changed my mind", "picked_up": -6, "qc_passed": -4,
+                 "refund": "₹3,999 refund initiated to the credit card, reference ARN 74120461299", "refund_initiated": -4}
+    }
+  ]
+}

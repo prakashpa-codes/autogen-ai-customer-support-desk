@@ -1,0 +1,190 @@
+﻿ticket_id,timestamp,customer_name,order_id,channel,complaint,category,urgency,sentiment,product,language,kb_sources,response,confidence,status,escalation_reason
+TKT-0001,2026-11-03 22:24:53,Ananya,,Chat,ok thanks,Other,Low,Positive,,English,none,"You're welcome, Ananya! If you have any more questions or need further assistance, just let me know.",0.00,Resolved,
+TKT-0002,2026-11-03 22:25:25,Arjun,ORD-49012,Chat,Where is my order ORD-49012?,Shipping,Medium,Neutral,,English,order ORD-49012,"Hi Arjun, I see you're asking about your order status, and I'm here to help. 
+
+Your order ORD-49012 was placed on 01 Nov 2026 and has been shipped as of 02 Nov 2026. It is expected to be delivered to Mumbai 400053 by 04 Nov 2026, which is in 1 day. 
+
+You can track your shipment with Blue Dart using tracking number BD90149012. If you have any more questions, feel free to ask!",1.00,Resolved,
+TKT-0003,2026-11-03 22:25:35,Vikram,,Chat,What size bat should I buy for my 12 year old son? He is about 4 ft 10 in.,Product,Low,Neutral,,English,product_faq.md,"Hi Vikram, I understand you're looking for the right bat size for your son. 
+
+Based on his height of 4 ft 10 in, he should use a Size 6 bat. 
+
+If you have any more questions or need further assistance, feel free to ask!",1.00,Resolved,
+TKT-0004,2026-11-03 22:25:44,Karthik,ORD-50689,Email,"Hi, I returned my running shoes last week. When will I get my refund?",Refund,Medium,Neutral,running shoes,English,order ORD-50689; refund_policy.md,"Dear Karthik,
+
+Thank you for reaching out about your refund for the returned running shoes. I see that your return was picked up on 29 Oct 2026, and the quality check passed on 31 Oct 2026. Currently, your refund is pending because we are waiting for your bank details to process it. 
+
+Since you paid by Cash on Delivery, the refund will take 3-5 business days via bank transfer (NEFT) after you provide your bank details, or it can be issued instantly as Captain's Club store credit. You will receive an email and SMS when the refund is initiated, along with a reference number to check with your bank.
+
+Next steps: Please share your bank details so we can proceed with your refund. 
+
+Warm regards,
+Dada Sports Customer Support",0.92,Resolved,
+TKT-0005,2026-11-03 22:25:55,Lakshmi,ORD-61299,Email,"Hello, what is the status of the refund for my order ORD-61299?",Refund,Medium,Neutral,,English,order ORD-61299; refund_policy.md,"Dear Lakshmi,
+
+Thank you for reaching out regarding the status of your refund for order ORD-61299. I can confirm that a refund of ₹3,999 was initiated to your credit card on 30 Oct 2026, after the return passed the quality check. 
+
+According to our refund policy, the time for the money to reach you depends on how you paid. Since you paid by credit card, the refund should take 5-7 business days to process. You will receive an email and SMS notification regarding the refund, along with a reference number (ARN 74120461299) that you can use to check with your bank.
+
+Next steps: Please allow 5-7 business days from the initiation date for the refund to reflect in your account.
+
+Warm regards,
+Dada Sports Customer Support",0.92,Resolved,
+TKT-0006,2026-11-03 22:26:05,Rohit Das,ORD-51007,Email,I ordered Eden Rubber Stud Cricket Shoes in UK 8 (order ORD-51007) but they are too tight. Can I swap them for UK 9?,Refund,Medium,Neutral,Eden Rubber Stud Cricket Shoes,English,refund_policy.md,"Dear Rohit,
+
+I understand that the Eden Rubber Stud Cricket Shoes in UK 8 are too tight for you. You can exchange them for UK 9 free of charge since you are within the 30-day exchange window from the delivery date, which was on 31 Oct 2026. 
+
+To initiate the exchange, please select the ""Exchange"" option under ""My Orders"" for your order ID ORD-51007. The replacement size will be dispatched as soon as the pickup of the current pair is completed. 
+
+Next steps: Please proceed with the exchange process at your earliest convenience. If you need further assistance, feel free to reach out.
+
+Warm regards,
+Dada Sports Customer Support",0.73,Resolved,
+TKT-0007,2026-11-03 22:26:14,Rahul Nair,ORD-52001,Web Form,My card was charged twice for this order. Please refund the extra payment.,Billing,Medium,Frustrated,,English,billing_and_payments.md,"Dear Rahul,
+
+I understand your frustration regarding the duplicate charge for your order. 
+
+If you see the same amount debited two or more times, please check your orders. If only one order was created, the extra debits are usually pending authorisations held by your bank, which are released automatically within 5-7 business days, and no action is needed from you. If more than one order was created by mistake, you can cancel the extra orders under My Orders before they ship, and the money will be refunded to your original payment method in 5-7 business days (1-3 business days for UPI). If the extra amount was actually captured, please contact support with the order ID, transaction reference numbers, and a screenshot of your bank statement. Our Payments team verifies the capture and refunds every duplicate charge within 48 hours of verification.
+
+Next steps: Please check your orders and let me know if you need further assistance.
+
+Warm regards,
+Dada Sports Customer Support
+
+Your ticket TKT-0007 has been passed to our senior support team. A specialist will contact you within 4 business hours, and you can quote this ticket number in any reply.",1.00,Escalated,Payment dispute
+TKT-0008,2026-11-03 22:26:23,Priya,,Chat,I forgot my password and the OTP never arrives on my phone.,Account,Medium,Frustrated,,English,account_and_login.md,"Hi Priya, I understand how frustrating it can be when you're unable to receive the OTP for your password reset.
+
+Here are some steps to troubleshoot the issue:
+1. Wait 60 seconds before tapping Resend OTP.
+2. Ensure your mobile number is correct and has network coverage.
+3. If Do Not Disturb (DND) is enabled, OTP messages may be delayed.
+4. You can request a maximum of 5 OTPs per hour; after that, wait 60 minutes before trying again.
+
+If you still face issues, please let me know your registered email or mobile number, and I can assist you further. 
+
+I'm here to help!",1.00,Resolved,
+TKT-0009,2026-11-03 22:26:31,Meena,,Chat,நான் வாங்கிய கிரிக்கெட் ஷூக்கள் சிறியதாக உள்ளன. பெரிய அளவுக்கு மாற்ற முடியுமா?,Product,Medium,Neutral,cricket shoes,Tamil,refund_policy.md,"வணக்கம் மீனா, உங்கள் கிரிக்கெட் ஷூக்கள் அளவுக்கு பொருந்தவில்லை என்பதற்காக வருந்துகிறேன். 
+
+1. நீங்கள் வாங்கிய கிரிக்கெட் ஷூக்களை 30 நாட்களுக்குள், ஒரே முறை, மாற்றலாம்.
+2. மாற்றம் செய்ய, My Orders இல் Return ஐ மாற்றி Exchange ஐ தேர்ந்தெடுக்கவும்.
+3. புதிய அளவுக்கு மாற்றம் செய்யும் போது, பழைய ஜோடி எடுக்கப்பட்ட பிறகு, புதிய ஜோடி அனுப்பப்படும்.
+
+தயவுசெய்து உங்கள் ஆர்டரின் ஐடியை வழங்கவும், அதன்பிறகு நாங்கள் உங்களுக்கு உதவலாம். 
+
+மேலும் உதவி தேவைப்பட்டால், தயவுசெய்து கேளுங்கள்.",0.76,Resolved,
+TKT-0010,2026-11-03 22:26:42,Lakshmi Iyer,ORD-50733,Chat,"My PowerBlend blender started smoking and sparking while I was using it, and my hand got slightly burnt.",Product,High,Frustrated,PowerBlend blender,English,warranty_and_replacements.md,"Hi Lakshmi, I'm really sorry to hear about the issue with your PowerBlend blender and the burn you experienced. 
+
+1. Please stop using the blender immediately and unplug it if it's safe to do so. 
+2. If you need medical assistance for your burn, please seek help right away. 
+3. Keep the blender and its packaging for inspection. 
+4. Report this incident to us by providing your order ID, along with photos or a short video of the issue. 
+
+Our product safety team will contact you within 4 business hours to assist you further. 
+
+Take care!
+
+Your ticket TKT-0010 has been passed to our senior support team. A specialist will contact you within 4 business hours, and you can quote this ticket number in any reply.",1.00,Escalated,High urgency; Product safety risk
+TKT-0011,2026-11-03 22:26:52,Sourav Basu,,Web Form,Do you sell gift cards for a company of 500 employees with custom branding?,Other,Low,Neutral,,English,none,"Dear Sourav,
+
+Thank you for reaching out to us. I could not find information about gift cards for a company with custom branding in Dada Sports' policies.
+
+If you have any other questions or need assistance with something else, feel free to ask!
+
+Warm regards,
+Dada Sports Customer Support
+
+Your ticket TKT-0011 has been passed to our senior support team. A specialist will contact you within 24 hours, and you can quote this ticket number in any reply.",0.00,Escalated,No matching knowledge-base document
+TKT-0012,2026-11-03 22:26:59,Coach Iqbal,,Chat,"We run a cricket academy. Can we order 25 kits with our logo, and is there a discount?",Other,Low,Neutral,,English,team_and_academy_orders.md,"Hello Coach Iqbal,
+
+Yes, you can order 25 cricket kits with your logo. For orders of 11 to 25 units, there is a 10% discount available. 
+
+To proceed, please contact our Teams desk at teams@dadasports.labspace.tech. They will send you a quotation within 2 business days. 
+
+Let me know if you need any more help!",1.00,Resolved,
+TKT-0013,2026-11-03 22:27:08,Arjun Mehta,ORD-49012,Email,You charged my card three times! Fix this now or I'm contacting my bank and a lawyer.,Billing,High,Angry,,English,billing_and_payments.md,"Dear Arjun,
+
+I understand your frustration regarding the multiple charges on your card, and I'm here to help.
+
+Upon reviewing your order (ORD-49012), I see that there was one successful payment of ₹2,999 captured, along with two pending authorizations of ₹2,999 each. These pending charges are likely held by your bank and will be released automatically within 5-7 business days. No action is needed from you for these pending authorizations.
+
+If you notice that any of these amounts have been captured as settled transactions after 2 business days, please contact us with the order ID and transaction details, and we will assist you further.
+
+Next steps: Please monitor your bank statement, and if you have any further issues, let us know.
+
+Warm regards,
+Dada Sports Customer Support
+
+Your ticket TKT-0013 has been passed to our senior support team. A specialist will contact you within 4 business hours, and you can quote this ticket number in any reply.",0.96,Escalated,High urgency; Very angry customer; Legal threat; Payment dispute
+TKT-0014,2026-11-03 22:27:17,Debashis,,Chat,How long does delivery to Port Blair take?,Shipping,Low,Neutral,,English,shipping_policy.md,"Hello Debashis,
+
+Delivery to Port Blair typically takes 7-12 business days from the day of dispatch. This timeline is counted in business days, which are Monday to Saturday, excluding national holidays.
+
+If you have any more questions or need further assistance, feel free to ask!",1.00,Resolved,
+TKT-0015,2026-11-03 22:27:25,Lakshmi,ORD-61299,Email,Still no refund for order ORD-61299. It has been days.,Refund,Medium,Frustrated,,English,order ORD-61299; refund_policy.md,"Dear Lakshmi,
+
+I understand your frustration regarding the delay in your refund for order ORD-61299. 
+
+The refund for your order was initiated on 30 Oct 2026, and since you paid by credit card, it typically takes 5-7 business days for the refund to reach your account after initiation. This means you should expect the refund to be processed by 6 Nov 2026 at the latest.
+
+If you have not received it by then, please check with your bank using the reference number ARN 74120461299 that was provided when the refund was initiated. 
+
+Warm regards,
+Dada Sports Customer Support
+
+Your ticket TKT-0015 has been passed to our senior support team. A specialist will contact you within 24 hours, and you can quote this ticket number in any reply.",0.92,Escalated,Repeat contact: earlier Refund ticket TKT-0005 within 14 days
+TKT-0016,2026-11-03 22:27:33,Meera Iyer,ORD-61234,Chat,Customer called: she wants to know the refund status for ORD-61234.,Refund,Medium,Neutral,,English,order ORD-61234; refund_policy.md,"Hi Meera, I understand you're looking for the refund status for your order. 
+
+The return for order ORD-61234 was picked up on 01 Nov 2026, and the refund process will start after the quality check is completed. 
+
+Once the quality check is done, the refund will be initiated. Since you paid by credit card, it will take 5-7 business days for the money to reach you after initiation. 
+
+Thank you for your patience, and let me know if you need further assistance!",1.00,Resolved,
+TKT-0017,2026-11-03 22:38:01,Prakash,,Chat,My blender started smoking and my hand got burnt,Product,High,Frustrated,blender,English,warranty_and_replacements.md,"Hi Prakash, I'm really sorry to hear about your blender and the burn injury. Your safety is very important to us. 
+
+1. Stop using the blender immediately and unplug it if it's safe to do so. 
+2. If you have burns, please seek medical help and cool the area under running water for at least 20 minutes. 
+3. Keep the blender and its packaging for inspection. 
+4. Please report this issue to us with your order ID, photos or a short video, and a description of what happened. 
+
+Once we receive your report, our product safety team will contact you within 4 business hours. They will arrange for the faulty unit to be collected free of charge and provide a full refund or a free replacement after reviewing the report. 
+
+Please let me know your order ID so we can assist you further.
+
+Your ticket TKT-0017 has been passed to our senior support team. A specialist will contact you within 4 business hours, and you can quote this ticket number in any reply.",1.00,Escalated,High urgency; Product safety risk
+TKT-0018,2026-11-03 22:40:18,Prakash,,Web Form,"How long does delivery to Chennai take, and is cash on delivery available?",Shipping,Low,Neutral,,English,shipping_policy.md,"Dear Prakash,
+
+Thank you for your inquiry about delivery and cash on delivery options. 
+
+1. Delivery to Chennai typically takes 2-4 business days from the day of dispatch.  
+2. Cash on Delivery (COD) is available for orders up to ₹10,000, with an additional handling fee of ₹49.  
+
+Next steps: If you have any specific order in mind, please let me know, and I can assist you further.
+
+Warm regards,
+Dada Sports Customer Support",0.92,Resolved,
+TKT-0020,2026-11-03 22:43:28,Rahul,,Chat,Where is my order? It was supposed to arrive yesterday.,Shipping,Medium,Frustrated,,English,shipping_policy.md,"Hi Rahul, I understand your frustration about the delayed order. 
+
+If your order has not arrived by the Estimated Delivery Date (EDD):
+1. Up to 1 business day after the EDD, check the tracking link. Most parcels that are slightly late are still moving and are delivered within 1 business day.
+2. If it’s 2 or more business days after the EDD, please provide your order ID so I can raise a priority trace with the courier and update you within 24 hours.
+
+Let me know your order ID, and I’ll assist you further!",0.97,Resolved,
+TKT-0021,2026-11-03 22:50:54,Deeply Human Labs,,Email,"Hi,
+
+My new English willow bat cracked after just two weeks of use. I want a
+full refund now, or I will take this to the consumer court.
+
+Prakash",Refund,High,Angry,English willow bat,English,warranty_and_replacements.md; refund_policy.md,"Dear Prakash,
+
+I understand your frustration regarding the cracked English willow bat. According to our warranty policy, the bat warranty covers manufacturing defects that appear during normal use, such as a crack running through the full thickness of the blade. However, surface cracks and edge cracks are not covered, as they are considered normal in English willow and can usually be repaired. 
+
+To proceed with a warranty claim, please provide your order ID, along with photos of the defect and a brief description of how it occurred. We will arrange a free pickup to our service centre for inspection. 
+
+Please note that the return window for cricket bats is 7 days from the date of delivery, and the bat must not have been knocked-in or oiled, and should have no ball marks. 
+
+Once we receive the required details, we will assist you further.
+
+Warm regards,
+Dada Sports Customer Support
+
+Your ticket TKT-0021 has been passed to our senior support team. A specialist will contact you within 4 business hours, and you can quote this ticket number in any reply.",0.83,Escalated,High urgency; Very angry customer; Legal threat

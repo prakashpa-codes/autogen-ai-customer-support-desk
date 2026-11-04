@@ -1,0 +1,15 @@
+# Backend service: agents, retrieval, API
+autogen-agentchat==0.7.5
+autogen-ext[openai,mcp]==0.7.5
+mcp==1.30.0  # AutoGen 0.7.5's MCP client targets the 1.x SDK
+google-api-python-client==2.201.0  # Gmail API, used by the Gmail MCP server
+google-auth-oauthlib==1.5.0
+fastapi==0.162.0
+uvicorn==0.54.0
+python-dotenv==1.2.4
+pandas==3.1.0
+openpyxl==3.1.5
+numpy==2.5.4
+faiss-cpu==1.15.1
+rank-bm25==0.2.2
+pypdf==6.21.4

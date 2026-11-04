@@ -1,0 +1,18 @@
+[server]
+# The dashboard lives at /dashboard everywhere (locally and behind the reverse proxy).
+baseUrlPath = "dashboard"
+headless = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+# Hide Streamlit's developer toolbar (Deploy, rerun) in the product UI.
+toolbarMode = "minimal"
+
+[theme]
+base = "light"
+primaryColor = "#0b2545"
+backgroundColor = "#fbfaf7"
+secondaryBackgroundColor = "#f1efe8"
+textColor = "#1b1b1a"

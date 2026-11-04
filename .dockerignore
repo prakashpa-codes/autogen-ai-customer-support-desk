@@ -1,0 +1,15 @@
+.env
+.env.*
+.venv
+.git
+.pytest_cache
+__pycache__
+**/__pycache__
+logs
+data/*.db*
+faiss_index
+data/tiktoken
+screenshots
+docs
+tests
+secrets

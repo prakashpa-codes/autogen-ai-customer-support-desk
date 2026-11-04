@@ -1,0 +1,59 @@
+# ResolveDesk: two services.
+#   backend  FastAPI: agent team, knowledge base, ticket data, storefront and API  (/ and /api)
+#   desk     Streamlit support dashboard                                          (/dashboard)
+#
+# Local:  docker compose up --build
+#         storefront  http://localhost:8090      dashboard  http://localhost:8591/dashboard
+# VPS:    the same command; Traefik routes PUBLIC_HOST to the containers via the labels below.
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    # Secrets come from .env at run time and are never baked into the image.
+    env_file: .env
+    environment:
+      DESK_URL: http://localhost:${DESK_PORT:-8591}/dashboard
+    volumes:
+      # Named volumes are owned by the container user and survive upgrades.
+      # The ticket log (logs/tickets.csv) is downloadable from the dashboard's Ticket log page.
+      - state:/app/state            # SQLite database
+      - logs:/app/logs              # tickets.csv and reviews.csv
+      - faiss-index:/app/faiss_index  # index.faiss + chunks.json
+      - ./secrets:/app/secrets        # Gmail OAuth client + token (git-ignored)
+    ports:
+      # 127.0.0.1 keeps it off the public internet; on the VPS only Traefik reaches it.
+      - "127.0.0.1:${SHOP_PORT:-8090}:8000"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.resolvedesk-shop.rule=Host(`${PUBLIC_HOST:-dadasports.labspace.tech}`)
+      - traefik.http.routers.resolvedesk-shop.entrypoints=websecure
+      - traefik.http.routers.resolvedesk-shop.tls.certresolver=letsencrypt
+      - traefik.http.services.resolvedesk-shop.loadbalancer.server.port=8000
+    restart: unless-stopped
+
+  desk:
+    build:
+      context: .
+      dockerfile: docker/desk.Dockerfile
+    environment:
+      BACKEND_URL: http://backend:8000
+    ports:
+      - "127.0.0.1:${DESK_PORT:-8591}:8501"
+    labels:
+      # The longer rule (Host + PathPrefix) wins over the storefront router for /dashboard.
+      - traefik.enable=true
+      - traefik.http.routers.resolvedesk-desk.rule=Host(`${PUBLIC_HOST:-dadasports.labspace.tech}`) && PathPrefix(`/dashboard`)
+      - traefik.http.routers.resolvedesk-desk.entrypoints=websecure
+      - traefik.http.routers.resolvedesk-desk.tls.certresolver=letsencrypt
+      - traefik.http.services.resolvedesk-desk.loadbalancer.server.port=8501
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  state:
+  logs:
+  faiss-index:

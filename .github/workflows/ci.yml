@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run offline test suite (no API key needed)
+        run: pytest -q
+      - name: Check the catalogue knowledge-base page is up to date
+        run: |
+          python scripts/build_catalogue_kb.py
+          git diff --exit-code knowledge_base/product_catalogue.md
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build images
+        run: |
+          docker build -f docker/backend.Dockerfile -t resolvedesk-backend .
+          docker build -f docker/desk.Dockerfile -t resolvedesk-desk .

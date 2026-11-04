@@ -1,0 +1,16 @@
+﻿id,hit,rank,reciprocal_rank,top_source,top_similarity
+PDF-1,1,1,1.0,orders_and_cancellations.md,0.38
+PDF-2,1,1,1.0,refund_policy.md,0.495
+PDF-3,1,1,1.0,account_and_login.md,0.577
+PDF-4,1,1,1.0,warranty_and_replacements.md,0.534
+PDF-5,1,1,1.0,billing_and_payments.md,0.465
+OWN-1,1,1,1.0,warranty_and_replacements.md,0.595
+OWN-2,1,1,1.0,refund_policy.md,0.115
+OWN-3,1,1,1.0,shipping_policy.md,0.157
+OWN-4,1,1,1.0,refund_policy.md,0.535
+OWN-5,1,1,1.0,account_and_login.md,0.569
+OWN-6,1,1,1.0,warranty_and_replacements.md,0.496
+OWN-7,1,1,1.0,team_and_academy_orders.md,0.52
+OWN-8,1,1,1.0,billing_and_payments.md,0.646
+OWN-9,1,1,1.0,bat_care_and_services.md,0.689
+OWN-10,1,1,1.0,account_and_login.md,0.617

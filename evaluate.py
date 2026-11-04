@@ -1,0 +1,201 @@
+"""Evaluate ResolveDesk end to end against labelled scenarios (real model, real retrieval).
+
+    python evaluate.py                       # all scenarios, round-robin team
+    python evaluate.py --mode selector       # same scenarios with SelectorGroupChat
+    python evaluate.py --only PDF-5 OWN-2    # a subset
+    python evaluate.py --retrieval-only      # retrieval metrics only (embeddings, no chat model)
+
+Writes evaluation/results_<mode>.csv, evaluation/report_<mode>.md and evaluation/retrieval_results.csv.
+Runs use a separate store in evaluation/run/, so the live ticket log is not touched.
+"""
+
+from __future__ import annotations
+
+import argparse
+import asyncio
+import csv
+import json
+import shutil
+import statistics
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from config import ROOT, settings
+from core.orders import OrderBook
+from core.retrieval import KnowledgeBase, OpenAIEmbedder
+from core.schemas import TicketContext
+from core.store import TicketStore
+from team import create_model_client, run_ticket
+
+EVAL_DIR = ROOT / "evaluation"
+SCENARIOS = json.loads((EVAL_DIR / "scenarios.json").read_text(encoding="utf-8"))
+
+
+def retrieval_eval(kb: KnowledgeBase, scenarios: list[dict], k: int) -> tuple[list[dict], dict]:
+    """Hit-rate@k and MRR: does an expected source appear among the top-k chunks for the complaint?"""
+    rows = []
+    for s in scenarios:
+        expected = set(s["expected"].get("sources", []))
+        if not expected:
+            continue
+        results = kb.search(s["complaint"], s["expected"]["category"][0], k)
+        rank = next((i + 1 for i, r in enumerate(results) if r.chunk.source in expected), None)
+        rows.append({
+            "id": s["id"],
+            "hit": int(rank is not None),
+            "rank": rank or "",
+            "reciprocal_rank": round(1 / rank, 3) if rank else 0.0,
+            "top_source": results[0].chunk.source if results else "",
+            "top_similarity": round(results[0].similarity, 3) if results else 0.0,
+        })
+    summary = {
+        f"hit_rate@{k}": round(statistics.mean(r["hit"] for r in rows), 3),
+        "mrr": round(statistics.mean(r["reciprocal_rank"] for r in rows), 3),
+        "queries": len(rows),
+    }
+    return rows, summary
+
+
+async def run_scenario(s: dict, kb: KnowledgeBase, store: TicketStore, mode: str) -> dict[str, Any]:
+    created = store.create_ticket(
+        s["complaint"], channel=s["channel"], customer_name=s.get("customer_name", ""), order_id=s.get("order_id", ""),
+        subject=s.get("subject", ""),
+    )
+    ctx = TicketContext(
+        ticket_id=created["ticket_id"], complaint=s["complaint"], customer_name=s.get("customer_name", ""),
+        order_id=s.get("order_id", ""), channel=s["channel"], subject=s.get("subject", ""),
+        # Scenarios are raised the way staff raise tickets from the dashboard.
+        identity_verified=True, raised_by_staff=True,
+    )
+    speakers: list[str] = []
+
+    async def emit(event_type: str, agent: str | None, data: dict) -> None:
+        if event_type == "agent_completed" and agent:
+            speakers.append(agent)
+
+    client = create_model_client(settings)
+    try:
+        meta = await run_ticket(ctx, kb, settings, store.record_processed_ticket, emit, client, mode=mode,
+                                orders=OrderBook.load(settings.orders_path))
+    finally:
+        await client.close()
+
+    exp = s["expected"]
+    t = ctx.triage
+    sources = sorted({p.source for p in ctx.cited_passages} or {p.source for p in ctx.evidence})
+    row = {
+        "id": s["id"],
+        "group": s["group"],
+        "complaint": s["complaint"],
+        "category": t.category if t else "",
+        "urgency": t.urgency if t else "",
+        "sentiment": t.sentiment if t else "",
+        "language": t.language if t else "",
+        "status": ctx.decision.status if ctx.decision else "",
+        "reasons": "; ".join(ctx.decision.reasons) if ctx.decision else "",
+        "kb_sources": "; ".join(sources) or "none",
+        "confidence": ctx.confidence.score if ctx.confidence else 0.0,
+        "agent_order": " > ".join(speakers),
+        "seconds": round(meta["duration_ms"] / 1000, 1),
+        "tokens": meta["prompt_tokens"] + meta["completion_tokens"],
+        "category_ok": int(t is not None and t.category in exp["category"]),
+        "status_ok": int(ctx.decision is not None and ctx.decision.status == exp["status"]),
+        "source_ok": int(ctx.no_match if exp.get("no_match") else bool(set(sources) & set(exp.get("sources", [])))),
+        "urgency_ok": "" if "urgency" not in exp else int(t is not None and t.urgency == exp["urgency"]),
+        "sentiment_ok": "" if "sentiment" not in exp else int(t is not None and t.sentiment == exp["sentiment"]),
+        "language_ok": "" if "language" not in exp else int(t is not None and exp["language"].lower() in t.language.lower()),
+        "reply": ctx.customer_reply,
+    }
+    mark = "PASS" if row["category_ok"] and row["status_ok"] and row["source_ok"] else "CHECK"
+    print(f"[{mark}] {s['id']:<7} {row['category']:<9} {row['urgency']:<6} {row['sentiment']:<10} "
+          f"{row['status']:<9} conf {row['confidence']:.2f}  {row['kb_sources']}")
+    return row
+
+
+def _rate(rows: list[dict], key: str) -> str:
+    values = [r[key] for r in rows if r[key] != ""]
+    return f"{sum(values)}/{len(values)}" if values else "-"
+
+
+def write_report(rows: list[dict], retrieval: dict, mode: str) -> None:
+    escalate_expected = {s["id"] for s in SCENARIOS if s["expected"]["status"] == "Escalated"}
+    tp = sum(1 for r in rows if r["status"] == "Escalated" and r["id"] in escalate_expected)
+    fp = sum(1 for r in rows if r["status"] == "Escalated" and r["id"] not in escalate_expected)
+    fn = sum(1 for r in rows if r["status"] != "Escalated" and r["id"] in escalate_expected)
+    lines = [
+        "# Evaluation report",
+        "",
+        f"Run: {datetime.now():%Y-%m-%d %H:%M} · model `{settings.model}` · embeddings `{settings.embedding_model}` · "
+        f"team mode `{mode}` · confidence threshold {settings.confidence_threshold} · relevance gate {settings.min_relevance}",
+        "",
+        "## Summary",
+        "",
+        "| Metric | Result |",
+        "|---|---|",
+        f"| Scenarios | {len(rows)} |",
+        f"| Category correct | {_rate(rows, 'category_ok')} |",
+        f"| Resolved / Escalated decision correct | {_rate(rows, 'status_ok')} |",
+        f"| Expected knowledge source used (or honest no-match) | {_rate(rows, 'source_ok')} |",
+        f"| Urgency correct (where labelled) | {_rate(rows, 'urgency_ok')} |",
+        f"| Sentiment correct (where labelled) | {_rate(rows, 'sentiment_ok')} |",
+        f"| Language detected (where labelled) | {_rate(rows, 'language_ok')} |",
+        f"| Escalation precision / recall | {tp}/{tp + fp} · {tp}/{tp + fn} |",
+        f"| Average confidence | {statistics.mean(r['confidence'] for r in rows):.2f} |",
+        f"| Average time per ticket | {statistics.mean(r['seconds'] for r in rows):.1f} s |",
+        f"| Average tokens per ticket | {statistics.mean(r['tokens'] for r in rows):,.0f} |",
+        f"| Retrieval hit-rate@{settings.top_k} / MRR | {retrieval.get(f'hit_rate@{settings.top_k}')} / {retrieval.get('mrr')} |",
+        "",
+        "## Per scenario",
+        "",
+        "| ID | Category | Urgency | Sentiment | Status | Confidence | Sources | Checks |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for r in rows:
+        checks = "✓" if r["category_ok"] and r["status_ok"] and r["source_ok"] else "✗"
+        lines.append(f"| {r['id']} | {r['category']} | {r['urgency']} | {r['sentiment']} | {r['status']} | "
+                     f"{r['confidence']:.2f} | {r['kb_sources']} | {checks} |")
+    (EVAL_DIR / f"report_{mode}.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def write_csv(path: Path, rows: list[dict]) -> None:
+    if not rows:
+        return
+    with path.open("w", encoding="utf-8-sig", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+async def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--mode", choices=["round_robin", "selector"], default=settings.team_mode)
+    parser.add_argument("--only", nargs="*", help="Scenario IDs to run")
+    parser.add_argument("--retrieval-only", action="store_true")
+    args = parser.parse_args()
+
+    scenarios = [s for s in SCENARIOS if not args.only or s["id"] in args.only]
+    kb = KnowledgeBase(settings.kb_dir, OpenAIEmbedder(settings.embedding_model, settings.openai_api_key),
+                       settings.index_dir).build()
+
+    retrieval_rows, retrieval = retrieval_eval(kb, scenarios, settings.top_k)
+    write_csv(EVAL_DIR / "retrieval_results.csv", retrieval_rows)
+    print(f"Retrieval: {retrieval}")
+    if args.retrieval_only:
+        return
+
+    run_dir = EVAL_DIR / "run"
+    shutil.rmtree(run_dir, ignore_errors=True)
+    store = TicketStore(run_dir / "eval.db", run_dir / "logs")
+    rows = []
+    for s in scenarios:
+        rows.append(await run_scenario(s, kb, store, args.mode))
+    store.close()
+
+    write_csv(EVAL_DIR / f"results_{args.mode}.csv", rows)
+    write_report(rows, retrieval, args.mode)
+    print(f"Wrote evaluation/results_{args.mode}.csv and evaluation/report_{args.mode}.md ({len(rows)} scenarios).")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
