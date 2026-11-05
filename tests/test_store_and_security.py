@@ -115,3 +115,18 @@ def test_ticket_log_keeps_one_row_per_ticket(store):
         rows = list(csv.DictReader(fh))
     assert [r["ticket_id"] for r in rows] == [first.ticket_id, other.ticket_id]
     assert (rows[0]["complaint"], rows[0]["status"]) == ("ok thanks", "Resolved")
+
+
+def test_card_numbers_and_codes_are_masked_before_storing(store):
+    created = store.create_ticket(
+        "Charged twice on card 4111 1111 1111 1234, my OTP is 482913 and CVV: 123. Order ORD-61299, call 9876543210.",
+        channel="Chat",
+    )
+    store.add_turn(created["ticket_id"], "customer", "Card number again: 5500-0000-0000-0004")
+    ticket = store.get(created["ticket_id"])
+    stored = ticket["conversation"]
+    for secret in ("4111 1111 1111", "482913", "123.", "5500-0000-0000"):
+        assert secret not in stored
+    assert "•••• •••• •••• 1234" in stored and "•••• •••• •••• 0004" in ticket["complaint"]
+    assert "OTP is ••••" in stored and "CVV: ••••" in stored
+    assert "ORD-61299" in stored and "9876543210" in stored  # support needs these

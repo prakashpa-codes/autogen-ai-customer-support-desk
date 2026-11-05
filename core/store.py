@@ -23,6 +23,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+from core.privacy import mask_sensitive
+
 if TYPE_CHECKING:
     from core.schemas import TicketContext
 
@@ -152,6 +154,7 @@ class TicketStore:
         identity_verified: bool = False,
         raised_by_staff: bool = False,
     ) -> dict[str, Any]:
+        complaint, subject = mask_sensitive(complaint), mask_sensitive(subject)
         token = secrets.token_urlsafe(16)
         now = _now()
         with self._lock:
@@ -170,6 +173,7 @@ class TicketStore:
 
     def add_turn(self, ticket_id: str, role: str, text: str) -> None:
         """Append a chat turn. A new customer turn becomes the message to process and re-queues the ticket."""
+        text = mask_sensitive(text)
         ticket = self.get(ticket_id)
         turns = json.loads(ticket.get("conversation") or "[]") if ticket else []
         turns.append({"role": role, "text": text})

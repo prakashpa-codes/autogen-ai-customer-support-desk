@@ -1,130 +1,158 @@
-﻿id,group,complaint,category,urgency,sentiment,language,status,reasons,kb_sources,confidence,agent_order,seconds,tokens,category_ok,status_ok,source_ok,urgency_ok,sentiment_ok,language_ok,reply
-PDF-1,Reference,Where is my order? It was supposed to arrive yesterday.,Shipping,Medium,Frustrated,English,Resolved,,shipping_policy.md,0.88,query_agent > knowledge_agent > resolution_agent > log_agent,10.5,8460,1,1,1,,,,"Hi Rahul, I understand your frustration about the delay in your order's arrival. 
+﻿id,group,complaint,category,urgency,sentiment,language,status,reasons,kb_sources,confidence,agent_order,seconds,tokens,category_ok,status_ok,source_ok,urgency_ok,sentiment_ok,language_ok,faithfulness,unsupported_claims,reply
+PDF-1,Reference,Where is my order? It was supposed to arrive yesterday.,Shipping,Medium,Frustrated,English,Resolved,,shipping_policy.md,0.959,query_agent > knowledge_agent > resolution_agent > log_agent,12.3,8756,1,1,1,,,,0.75,"Since your order was supposed to arrive yesterday, please provide your order ID so I can assist you further.","Hi Rahul, I understand how frustrating it is when an order doesn't arrive on time. 
 
-If your order has not arrived by the estimated delivery date, please check the tracking link. Most parcels that are slightly late are still moving and are delivered within 1 business day. If it has been 2 or more business days since the estimated delivery date, please provide your order ID so I can assist you further. 
+If your order hasn't arrived by the Estimated Delivery Date (EDD), please check the tracking link first. Most parcels that are slightly late are still moving and are delivered within 1 business day. 
 
-Let me know your order ID, and I'll help you from there!"
-PDF-2,Reference,I want to return the shoes I bought last week. How do I get a refund?,Refund,Medium,Neutral,English,Resolved,,refund_policy.md,0.728,query_agent > knowledge_agent > resolution_agent > log_agent,9.0,7951,1,1,1,,,,"Hi Ananya, I understand you want to return the shoes you bought. 
-
-You can return the Eden Rubber Stud Cricket Shoes within 30 days of delivery, which means you have until 28 Nov 2026. The shoes must be unworn outdoors, with no spike or stud wear, and in their original box with tags attached. 
-
-To initiate the return, please go to My Orders and select Return. If you need further assistance, let me know! 
+Since your order was supposed to arrive yesterday, please provide your order ID so I can assist you further. Once I have that, I can raise a priority trace with the courier and update you within 24 hours. 
 
 Thank you!"
-PDF-3,Reference,I forgot my password and can't log in.,Account,Medium,Neutral,English,Resolved,,account_and_login.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,13.3,9813,1,1,1,,,,"Hi Vikram, I understand how frustrating it can be to forget your password. 
+PDF-2,Reference,I want to return the shoes I bought last week. How do I get a refund?,Refund,Medium,Neutral,English,Resolved,,refund_policy.md,0.875,query_agent > knowledge_agent > resolution_agent > log_agent,10.4,8215,1,1,1,,,,0.8,"To initiate the return, please go to My Orders and select Return.","Hi Ananya, I understand you want to return the shoes you bought. 
+
+You can return the Eden Rubber Stud Cricket Shoes within 30 days of delivery, which means you have until 29 Nov 2026. The shoes must be unworn outdoors, with no spike or stud wear, and in their original box with tags attached. 
+
+To initiate the return, please go to My Orders and select Return. Once we receive the shoes, they will be inspected within 48 hours. 
+
+Let me know if you need any more help!"
+PDF-3,Reference,I forgot my password and can't log in.,Account,Medium,Neutral,English,Resolved,,account_and_login.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,13.3,10988,1,1,1,,,,1.0,,"Hi Vikram, I understand how frustrating it can be to forget your password. 
 
 To reset your password, please follow these steps:
-1. On the Login page, select 'Forgot password'.
+1. On the Login page, select ""Forgot password"".
 2. Enter the email address or mobile number registered with your account.
 3. You will receive a 6-digit OTP on your mobile (valid for 10 minutes) or a reset link to your email (valid for 30 minutes).
 4. Enter the OTP or open the link, then choose a new password.
-5. After a successful reset, you will be signed out of all other devices for your security.
 
 If you need further assistance, feel free to ask!"
-PDF-4,Reference,The blender I received is broken. Can I get a replacement?,Product,Medium,Frustrated,English,Resolved,,warranty_and_replacements.md,0.789,query_agent > knowledge_agent > resolution_agent > log_agent,9.0,8727,1,1,1,,,,"Hi Meera, I'm sorry to hear that the blender you received is broken. 
+PDF-4,Reference,The blender I received is broken. Can I get a replacement?,Product,Medium,Frustrated,English,Escalated,Low confidence (0.68 < 0.70),warranty_and_replacements.md,0.681,query_agent > knowledge_agent > resolution_agent > log_agent,18.8,8744,1,0,1,,,,1.0,,"Hi Meera, I'm sorry to hear that your blender is broken. 
 
-To get a replacement, please report the issue within 48 hours of delivery through My Orders > Report a problem, by chat, or by email with your order ID. You should also share clear photos of the product, the damage, and the shipping label. An unboxing video or a short video showing the fault will help us approve the claim faster. 
+To get a replacement, please report the issue within 48 hours of delivery, which was on 04 Nov 2026. You can do this through My Orders > Report a problem, by chat, or by email with your order ID ORD-48877. 
 
-Once your claim is approved, a free replacement will be dispatched within 2 business days, and the courier will collect the faulty item at the same time. 
+Make sure to include clear photos of the product, the damage, and the shipping label. Our team will review your claim and respond within 24 hours. Once approved, a free replacement will be dispatched within 2 business days. 
 
-Let me know if you need further assistance!"
-PDF-5,Reference,You charged my card three times! Fix this now or I'm contacting my bank and a lawyer.,Billing,High,Angry,English,Escalated,High urgency; Very angry customer; Legal threat; Payment dispute,billing_and_payments.md,0.938,query_agent > knowledge_agent > resolution_agent > log_agent,9.0,7899,1,1,1,1,1,,"Hi Arjun, I understand your frustration regarding the multiple charges on your card. 
+Let me know if you need further assistance!
 
-You were charged three times for your order (ORD-49012), but only one payment of ₹2,999 was captured. The other two charges are pending authorisations by your bank, which should be released automatically within 5-7 business days. 
+Your ticket TKT-0004 has been passed to our senior support team. A specialist will contact you within 24 hours, and you can quote this ticket number in any reply."
+PDF-5,Reference,You charged my card three times! Fix this now or I'm contacting my bank and a lawyer.,Billing,High,Angry,English,Escalated,High urgency; Very angry customer; Legal threat; Payment dispute,billing_and_payments.md; order ORD-49012,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,20.0,10096,1,1,1,1,1,,1.0,,"Hi Arjun, I understand your frustration regarding the multiple charges on your card. 
 
-If you see the extra amounts captured as settled transactions, please contact us with the order ID and transaction details for further assistance. 
+There were three payment attempts for your order: one was captured for ₹2,999, and two are pending authorizations of ₹2,999 each. These pending amounts are typically held by your bank and should be released automatically within 5-7 business days. 
+
+If you see the captured amount as a settled transaction after 2 business days, please contact us with the order ID and transaction details for further assistance. 
 
 Let me know if you need any more help!
 
 Your ticket TKT-0005 has been passed to our senior support team. A specialist will contact you within 4 business hours, and you can quote this ticket number in any reply."
-PDF-6,Reference,Do you sell gift cards for a company of 500 employees with custom branding?,Other,Low,Neutral,English,Escalated,No matching knowledge-base document,none,0.0,query_agent > knowledge_agent > resolution_agent > log_agent,10.1,6903,1,1,1,,,,"Hi Neha, thanks for reaching out! I couldn't find information about gift cards for corporate use with custom branding in Dada Sports' policies. If you have any other questions or need assistance with something else, feel free to ask!
+PDF-6,Reference,Do you sell gift cards for a company of 500 employees with custom branding?,Other,Low,Neutral,English,Escalated,No matching knowledge-base document,none,0.0,query_agent > knowledge_agent > resolution_agent > log_agent,10.1,6899,1,1,1,,,,n/a,,"Hi Neha, thanks for reaching out! I couldn't find information about gift cards for corporate use with custom branding in Dada Sports' policies. If you have any other questions or need assistance with something else, feel free to ask!
 
 Your ticket TKT-0006 has been passed to our senior support team. A specialist will contact you within 24 hours, and you can quote this ticket number in any reply."
-OWN-1,Own,My Dada Pro Grade 1 bat developed a crack on the edge after two weeks of nets. Is this covered under warranty?,Product,Medium,Frustrated,English,Resolved,,bat_care_and_services.md; warranty_and_replacements.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,9.5,8801,1,1,1,,,,"Hi Sourav, I'm sorry to hear about the crack in your bat. Unfortunately, edge cracks are not covered under the warranty as they are considered normal for English willow bats and can usually be repaired. 
+OWN-1,Own,My Dada Pro Grade 1 bat developed a crack on the edge after two weeks of nets. Is this covered under warranty?,Product,Medium,Frustrated,English,Resolved,,warranty_and_replacements.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,9.6,10099,1,1,1,,,,1.0,,"Hi Sourav, I understand how frustrating it can be to deal with a cracked bat after just two weeks of use. 
 
-You can book a repair service for the edge crack at our service centres in Chennai, Mumbai, or Bengaluru, with prices ranging from ₹399 to ₹899 depending on the size, and the turnaround time is 5 business days. 
+The Dada Pro Grade 1 bat has a 6-month warranty against manufacturing defects, but edge cracks are not covered under warranty as they are considered normal for English willow bats. 
 
-If you need assistance with booking a repair, please let me know!"
-OWN-2,Own,நான் வாங்கிய கிரிக்கெட் ஷூக்கள் சிறியதாக உள்ளன. இவற்றை பெரிய அளவுக்கு மாற்ற முடியுமா?,Product,Medium,Neutral,Tamil,Escalated,Low confidence (0.69 < 0.70),refund_policy.md,0.693,query_agent > knowledge_agent > resolution_agent > log_agent,13.4,11378,1,0,1,,,1,"வணக்கம் கவ்யா, உங்கள் கிரிக்கெட் ஷூக்கள் சிறியதாக இருப்பது குறித்து வருந்துகிறேன். 
+If you believe the crack is a manufacturing defect, please contact support with your order ID and photos of the defect. We will arrange a free pickup for inspection. 
 
-நீங்கள் வாங்கிய ஷூக்களை பெரிய அளவுக்கு மாற்றலாம். இதற்காக, உங்கள் ஆர்டரில் My Orders என்ற பகுதியில் Exchange என்பதை தேர்ந்தெடுக்கவும். இது 30 நாட்களுக்கு உள்ளே, உங்கள் பொருளின் அசல் பெட்டியில் மற்றும் குறிச்சொற்களுடன் இருக்க வேண்டும். 
+Let me know if you need further assistance!"
+OWN-2,Own,நான் வாங்கிய கிரிக்கெட் ஷூக்கள் சிறியதாக உள்ளன. இவற்றை பெரிய அளவுக்கு மாற்ற முடியுமா?,Product,Medium,Neutral,Tamil,Resolved,,refund_policy.md,0.818,query_agent > knowledge_agent > resolution_agent > log_agent,9.3,9070,1,1,1,,,1,1.0,,"வணக்கம் கவ்யா, உங்கள் கிரிக்கெட் ஷூக்கள் சிறியதாக இருப்பது குறித்து வருந்துகிறேன். 
 
-Dada Sports இல் உங்கள் மாற்றத்தை செயல்படுத்த, உங்கள் ஆர்டர் ID (ORD-50410) பயன்படுத்தவும். 
+நீங்கள் வாங்கிய ஷூக்களை பெரிய அளவுக்கு மாற்றலாம். இதற்காக, உங்கள் ஆர்டரில் ""My Orders"" பகுதியில் ""Exchange"" என்பதை தேர்வு செய்யவும். மாற்றம் 30 நாட்கள் உள்ளடக்கத்தில், உங்கள் பொருள் வழங்கிய நாளில் இருந்து தொடங்குகிறது. 
 
-மேலும் உதவி தேவைப்பட்டால், தயவுசெய்து கேளுங்கள்.
+மாற்றம் செய்யும் போது, புதிய அளவுக்கு மாற்றம் செய்யப்படும், ஆனால் நீங்கள் கேட்ட அளவு கிடைக்கவில்லை என்றால், அது பணத்தை திருப்பி அளிக்கப்படும். 
 
-Your ticket TKT-0008 has been passed to our senior support team. A specialist will contact you within 24 hours, and you can quote this ticket number in any reply."
-OWN-3,Own,আমার অর্ডার এখনও আসেনি। ডেলিভারির তারিখ তিন দিন আগে পেরিয়ে গেছে। কী করব?,Shipping,Medium,Frustrated,Bengali,Resolved,,order ORD-50577; shipping_policy.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,14.1,10775,1,1,1,,,1,"হ্যালো দেবাশিস, আমি বুঝতে পারছি যে আপনার অর্ডার এখনও আসেনি এবং এটি আপনার জন্য হতাশাজনক।  
+மேலும் உதவி தேவைப்பட்டால், தயவுசெய்து கேளுங்கள்."
+OWN-3,Own,আমার অর্ডার এখনও আসেনি। ডেলিভারির তারিখ তিন দিন আগে পেরিয়ে গেছে। কী করব?,Shipping,Medium,Frustrated,Bengali,Resolved,,order ORD-50577; shipping_policy.md,0.938,query_agent > knowledge_agent > resolution_agent > log_agent,16.1,10661,1,1,1,,,1,1.0,,"হ্যালো দেবাশিস, আমি বুঝতে পারছি যে আপনার অর্ডার এখনও আসেনি এবং এটি আপনার জন্য হতাশাজনক।  
 
-আপনার অর্ডারটি ৩১ অক্টোবর ২০২৬ তারিখে ডেলিভারির জন্য নির্ধারিত ছিল, কিন্তু এখনও আসেনি.  
+আপনার অর্ডারটি ২ নভেম্বর ২০২৬ তারিখে ডেলিভারির জন্য নির্ধারিত ছিল, যা এখন ৩ দিন বিলম্বিত।  
+১. ১ ব্যবসায়িক দিন বিলম্ব হলে ট্র্যাকিং লিঙ্ক চেক করুন।  
+২. ২ বা তার বেশি ব্যবসায়িক দিন বিলম্ব হলে, দয়া করে আমাদের সাথে যোগাযোগ করুন আপনার অর্ডার আইডি সহ। আমরা কুরিয়ারের সাথে একটি প্রাধান্য অনুসন্ধান শুরু করব এবং ২৪ ঘণ্টার মধ্যে আপনাকে আপডেট করব।  
 
-১. ১ ব্যবসায়িক দিনের মধ্যে ডেলিভারি তারিখ পার হলে, ট্র্যাকিং লিঙ্ক চেক করুন.  
-২. যদি ২ বা তার বেশি ব্যবসায়িক দিন পেরিয়ে যায়, তাহলে আপনার অর্ডার আইডি সহ আমাদের সাথে যোগাযোগ করুন. আমরা কুরিয়ারের সাথে একটি প্রাধান্য অনুসন্ধান শুরু করব এবং ২৪ ঘণ্টার মধ্যে আপনাকে আপডেট দেব.  
+আপনার অর্ডার আইডি (ORD-50577) দিয়ে আমাদের সাথে যোগাযোগ করুন।  
 
-আপনার অর্ডার আইডি ORD-50577.  
+আপনার সাহায্য করতে পেরে আমি খুশি।"
+OWN-4,Own,"Hello, I returned the DS Run Neo running shoes from my cash on delivery order last week. How will I receive my refund and how long will it take?",Refund,Medium,Neutral,English,Resolved,,order ORD-50689; refund_policy.md,0.917,query_agent > knowledge_agent > resolution_agent > log_agent,12.8,10991,1,1,1,,,,1.0,,"Dear Karthik,
 
-যেকোনো সাহায্যের জন্য আমি এখানে আছি!"
-OWN-4,Own,"Hello, I returned the DS Run Neo running shoes from my cash on delivery order last week. How will I receive my refund and how long will it take?",Refund,Medium,Neutral,English,Resolved,,order ORD-50689; refund_policy.md,0.875,query_agent > knowledge_agent > resolution_agent > log_agent,13.5,10991,1,1,1,,,,"Dear Karthik,
+Thank you for reaching out regarding your refund for the returned DS Run Neo running shoes. I see that your return was picked up on 31 Oct 2026 and has passed the quality check on 02 Nov 2026. 
 
-Thank you for reaching out regarding your refund for the returned DS Run Neo running shoes. I can confirm that your refund is currently pending, as we are waiting for your bank details to process the refund. 
-
-Once you provide your bank details, the refund will be initiated. For Cash on Delivery orders, the refund typically takes 3-5 business days to reach you via bank transfer (NEFT) after initiation, or it can be credited instantly as Captain's Club store credit if you choose that option. You will receive an email and SMS notification when the refund is initiated, along with a reference number to track it.
+To receive your refund, please provide your bank details, as refunds for cash on delivery orders are processed via NEFT. Once we have your bank details, the refund will be initiated and should reach you within 3-5 business days. You will also receive an email and SMS notification when the refund is initiated, along with a reference number to track it with your bank.
 
 Next steps: Please share your bank details so we can proceed with your refund.
 
 Warm regards,
 Dada Sports Customer Support"
-OWN-5,Own,Someone placed an order from my account that I never made and used my saved card. Please help!,Account,High,Frustrated,English,Escalated,High urgency; Possible fraud,account_and_login.md; billing_and_payments.md,0.938,query_agent > knowledge_agent > resolution_agent > log_agent,13.3,10433,1,1,1,,,,"Hi Farhan, I understand how concerning this situation is. 
+OWN-5,Own,Someone placed an order from my account that I never made and used my saved card. Please help!,Account,High,Frustrated,English,Escalated,High urgency; Possible fraud,account_and_login.md; billing_and_payments.md,0.917,query_agent > knowledge_agent > resolution_agent > log_agent,14.3,10284,1,1,1,,,,1.0,,"Hi Farhan, I understand how concerning this situation is. 
 
-Here are the steps you should take:
-1. Reset your password immediately.
+1. Please reset your password immediately.
 2. Sign out of all devices under My Account > Security.
-3. Contact support to freeze your account and cancel any unshipped orders you did not place. We will investigate within 3 business days.
-4. Call your bank to block the card used for the unauthorized order.
+3. Contact us to freeze your account and cancel any unshipped orders. We will investigate within 3 business days.
 
-Please provide the order ID if you have it, so we can assist you further. 
+To assist you further, please provide the order ID for the unauthorized order. 
 
 I'm here to help!
 
 Your ticket TKT-0011 has been passed to our senior support team. A specialist will contact you within 4 business hours, and you can quote this ticket number in any reply."
-OWN-6,Own,My PowerBlend blender started smoking and sparking while I was using it and my hand got slightly burnt.,Product,High,Frustrated,English,Escalated,High urgency; Product safety risk,warranty_and_replacements.md,0.938,query_agent > knowledge_agent > resolution_agent > log_agent,12.6,9684,1,1,1,1,,,"Hi Lakshmi, I'm really sorry to hear about your experience with the PowerBlend blender. Your safety is important to us. 
+OWN-6,Own,My PowerBlend blender started smoking and sparking while I was using it and my hand got slightly burnt.,Product,High,Frustrated,English,Escalated,High urgency; Product safety risk,warranty_and_replacements.md,0.9,query_agent > knowledge_agent > resolution_agent > log_agent,8.9,8779,1,1,1,1,,,1.0,,"Hi Lakshmi,
 
-1. Stop using the blender immediately and unplug it if it's safe to do so. 
-2. If you have any injuries, please seek medical help. For burns, cool the area under running water for at least 20 minutes. 
-3. Keep the blender and its packaging for inspection. 
-4. Please report this issue by providing your order ID, photos or a video, and a description of what happened. 
+I'm really sorry to hear about the issue with your PowerBlend blender and the injury you experienced. It's important to address this safely.
 
-Our product safety team will contact you within 4 business hours to assist further. Thank you for bringing this to our attention.
+1. Stop using the blender immediately and unplug it if it's safe to do so.
+2. If you have any burns, please seek medical help and cool the area under running water for at least 20 minutes.
+3. Keep the blender and its packaging for inspection.
+4. Please report this incident by providing your order ID (ORD-50733), along with photos or a short video of the issue and a description of what happened.
+
+Our product safety team will contact you within 4 business hours. Thank you for bringing this to our attention.
 
 Your ticket TKT-0012 has been passed to our senior support team. A specialist will contact you within 4 business hours, and you can quote this ticket number in any reply."
-OWN-7,Own,We run a cricket academy and want to buy 40 Kashmir willow bats for our juniors. What discount do you offer on a bulk order like this?,Other,Low,Neutral,English,Resolved,,team_and_academy_orders.md,0.857,query_agent > knowledge_agent > resolution_agent > log_agent,10.3,10740,1,1,1,,,,"Dear Coach Iyer,
+OWN-7,Own,We run a cricket academy and want to buy 40 Kashmir willow bats for our juniors. What discount do you offer on a bulk order like this?,Other,Low,Neutral,English,Resolved,,team_and_academy_orders.md,0.857,query_agent > knowledge_agent > resolution_agent > log_agent,9.3,10676,1,1,1,,,,1.0,,"Dear Coach Iyer,
 
-Thank you for reaching out about your bulk order of Kashmir willow bats for your cricket academy. For orders of 40 bats, you would qualify for a 15% discount as per our bulk order discount policy, which applies to orders of 26-50 units of the same product.
+Thank you for reaching out about purchasing 40 Kashmir willow bats for your cricket academy. For bulk orders of 26 to 50 units, we offer a 15% discount on the total order amount. 
 
-To proceed, please provide the GSTIN for your academy when placing the order, as a GST invoice will be issued in your institution's name. 
-
-If you have any further questions or need assistance with your order, feel free to ask!
+To proceed, please provide the GSTIN for your academy, as a GST invoice will be issued in your institution's name. Once we have this information, the Teams desk will send you a quotation within 2 business days. 
 
 Warm regards,
 Dada Sports Customer Support"
-OWN-8,Own,Can I buy the Bowl-O-Matic Lite bowling machine on no-cost EMI using my HDFC credit card?,Billing,Low,Neutral,English,Resolved,,billing_and_payments.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,10.6,9099,1,1,1,,,,"Hi Aditya, 
+OWN-8,Own,Can I buy the Bowl-O-Matic Lite bowling machine on no-cost EMI using my HDFC credit card?,Billing,Low,Neutral,English,Resolved,,billing_and_payments.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,11.8,9084,1,1,1,,,,1.0,,"Hi Aditya, 
 
-Yes, you can buy the Bowl-O-Matic Lite bowling machine on no-cost EMI using your HDFC credit card, as long as the order is ₹3,000 or more. The interest will be given back to you as an upfront discount for a 3 or 6 month EMI option. 
+Yes, you can buy the Bowl-O-Matic Lite bowling machine on no-cost EMI using your HDFC credit card, as long as the order is ₹3,000 or more. The interest will be given back to you as an upfront discount. 
 
 If you have any more questions or need assistance with your order, feel free to ask! 
 
-Best regards."
-OWN-9,Own,How much does your bat knocking-in service cost and how long does it take?,Product,Low,Neutral,English,Resolved,,bat_care_and_services.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,7.7,6793,1,1,1,,,,"Hi Pooja, I understand you're curious about our bat knocking-in service. 
+Best regards,"
+OWN-9,Own,How much does your bat knocking-in service cost and how long does it take?,Product,Low,Neutral,English,Resolved,,bat_care_and_services.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,7.6,6793,1,1,1,,,,1.0,,"Hi Pooja, I understand you're curious about our bat knocking-in service. 
 
 The cost is ₹799 per bat, and it takes 3 business days in-store. For online orders, it adds 3 business days before dispatch. 
 
 If you have any more questions or need assistance with an order, feel free to ask!"
-OWN-10,Own,I'm not getting the OTP to log in. I've tried many times now.,Account,Medium,Frustrated,English,Resolved,,account_and_login.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,12.6,8258,1,1,1,,,,"Hi Imran, I understand how frustrating it can be not to receive the OTP for logging in. Here are some steps you can try:
+OWN-10,Own,I'm not getting the OTP to log in. I've tried many times now.,Account,Medium,Frustrated,English,Resolved,,account_and_login.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,11.3,8243,1,1,1,,,,1.0,,"Hi Imran, I understand how frustrating it can be not to receive the OTP for logging in. Here are some steps you can try:
 
 1. Wait 60 seconds before tapping Resend OTP.
 2. Ensure your mobile number is correct and has network coverage.
 3. If Do Not Disturb (DND) is enabled, OTP messages may be delayed.
-4. Check your spam folder if you opted for email.
-5. Remember, you can request a maximum of 5 OTPs per hour; after that, wait 60 minutes before trying again.
+4. If you chose email, check your spam folder.
+5. You can request a maximum of 5 OTPs per hour; after that, wait 60 minutes before trying again.
 
-If you continue to have issues, please let me know. I'm here to help!"
+If you still face issues, please let me know. I'm here to help!"
+OWN-11,Own,"My son is 4 ft 8 in tall and just joined a cricket academy. Which bat size should I buy, and should it be English or Kashmir willow?",Product,Low,Neutral,English,Resolved,,product_faq.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,11.5,10045,1,1,1,,,,1.0,,"Hi Rahul, it's great to hear your son is joining a cricket academy! 
+
+Based on his height of 4 ft 8 in, he should use a Size 5 bat. 
+
+Regarding the type of bat, English willow is lighter and offers better performance, but it requires maintenance. Kashmir willow is more durable and ready to use, making it suitable for beginners. 
+
+If you have any more questions or need further assistance, feel free to ask!"
+OWN-12,Own,I placed an order this morning by mistake. It hasn't shipped yet. How do I cancel it and get my money back?,Refund,Medium,Neutral,English,Resolved,,orders_and_cancellations.md; refund_policy.md,0.875,query_agent > knowledge_agent > resolution_agent > log_agent,11.7,10403,1,1,1,,,,1.0,,"Hi Sneha, I understand that you want to cancel your order placed by mistake. 
+
+You can cancel your order free of charge since it hasn't shipped yet. Just go to My Orders > Cancel, and the full amount, including shipping fees, will be refunded to your original payment method. 
+
+Please provide your order ID so I can assist you further. 
+
+Let me know if you need any more help!"
+OWN-13,Own,என் கடவுச்சொல்லை மறந்துவிட்டேன். அதை எப்படி மாற்றுவது?,Account,Low,Neutral,Tamil,Resolved,,account_and_login.md,1.0,query_agent > knowledge_agent > resolution_agent > log_agent,14.6,10643,1,1,1,,,1,1.0,,"வணக்கம் செல்வி, உங்கள் கடவுச்சொல்லை மறந்துவிட்டதற்காக வருந்துகிறேன். அதை மாற்றுவதற்கான படிகள் இங்கே உள்ளன:
+
+1. உள்நுழைவு பக்கத்தில், ""கடவுச்சொல் மறந்துவிட்டேன்"" என்பதை தேர்ந்தெடுக்கவும்.
+2. உங்கள் கணக்கில் பதிவு செய்யப்பட்ட மின்னஞ்சல் முகவரி அல்லது மொபைல் எண்ணை உள்ளிடவும்.
+3. உங்கள் மொபைலுக்கு 6-எண் OTP அனுப்பப்படும் (10 நிமிடங்கள் செல்லுபடியாகும்) அல்லது உங்கள் மின்னஞ்சலுக்கு மீட்டமைப்பு இணைப்பு அனுப்பப்படும் (30 நிமிடங்கள் செல்லுபடியாகும்).
+4. OTP ஐ உள்ளிடவும் அல்லது இணைப்பை திறக்கவும், பின்னர் கடவுச்சொல்லை மாற்றவும்.
+5. வெற்றிகரமாக மீட்டமைக்கப்பட்ட பிறகு, உங்கள் பாதுகாப்பிற்காக மற்ற அனைத்து சாதனங்களில் இருந்து நீங்கள் வெளியேற்றப்படுவீர்கள்.
+
+உங்கள் பதிவு செய்யப்பட்ட மின்னஞ்சல் அல்லது மொபைல் எண்ணுக்கு அணுகல் இல்லையெனில், ஆதரவுக்கு தொடர்பு கொள்ளவும். உங்கள் அடையாளத்தை உறுதிப்படுத்த, சமீபத்திய ஆர்டர் ஐடி மற்றும் டெலிவரி PIN குறியீட்டை பயன்படுத்துவோம்.
+
+மேலும் உதவி தேவைப்பட்டால், தயவுசெய்து கேளுங்கள்."
+OWN-14,Own,Can I trade in my old cricket bat and get a discount on a new one?,Other,Low,Neutral,English,Escalated,No matching knowledge-base document,none,0.0,query_agent > knowledge_agent > resolution_agent > log_agent,7.9,6697,1,1,1,,,,n/a,,"Hi Naveen, thanks for reaching out! I couldn't find any information about trading in your old cricket bat for a discount on a new one at Dada Sports. If you have any other questions or need assistance with something else, feel free to ask!
+
+Your ticket TKT-0020 has been passed to our senior support team. A specialist will contact you within 24 hours, and you can quote this ticket number in any reply."

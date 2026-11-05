@@ -10,7 +10,7 @@ ResolveDesk runs the support desk of **Dada Sports**, a Chennai-based cricket an
   <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-backend-0b2545">
   <img alt="Streamlit" src="https://img.shields.io/badge/Streamlit-dashboard-0b2545">
   <img alt="Retrieval" src="https://img.shields.io/badge/RAG-BM25%20%2B%20FAISS-e0a526">
-  <img alt="Tests" src="https://img.shields.io/badge/tests-76%20passing-0ca30c">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-77%20passing-0ca30c">
 </p>
 
 ## Demo
@@ -64,6 +64,7 @@ ResolveDesk answers routine tickets instantly **from the company's own documents
 - Asks for missing details (an order ID for a refund, photos for a damage claim) instead of implying anything was done.
 - `lookup_order` reads the order record, which becomes citable evidence `[O1]`; `customer_history` finds earlier tickets, and a repeat contact within 14 days is escalated.
 - Privacy gates: order details only for staff or a matching email; history in replies only for verified identities (email from that mailbox, or staff).
+- Card numbers, OTPs, CVVs and PINs a customer types by mistake are masked (`•••• •••• •••• 1234`) before the ticket is stored, so they never reach the model, the log or the dashboard.
 
 **Conversational chat**
 - One chat conversation is one ticket: follow-up messages continue the same ticket with the earlier turns as context.
@@ -424,11 +425,11 @@ Two complaints that are not in the reference set, raised on the **New ticket** p
 pytest
 ```
 
-76 tests cover:
+77 tests cover:
 - retrieval (chunking, BM25, category boost, per-document diversity, saving and reusing the FAISS index)
 - confidence scoring (citations, figures, other scripts, greeting detection, request relevance)
 - every escalation rule, including repeat contact, the small-talk exemption and the keyword safety net
-- the ticket store, CSV columns (one row per ticket, also for chat conversations) and customer-history matching (email or order ID, never name)
+- the ticket store, CSV columns (one row per ticket, also for chat conversations), card and OTP masking, and customer-history matching (email or order ID, never name)
 - order lookup: relative dates, rendering, and the access rule (staff, matching email, wrong email, unknown ID)
 - authentication, session re-validation and rate limits
 - the HTTP API (access control, SSE, export, review, order-ID capture)
@@ -448,24 +449,28 @@ CI runs the suite and builds both Docker images on every push (`.github/workflow
 ```powershell
 python evaluate.py                    # round robin
 python evaluate.py --mode selector    # selector group chat
+python evaluate.py --no-judge         # skip the LLM-judge faithfulness check
 ```
 
-The evaluation runs 16 labelled scenarios through the real model and retrieval: 6 reference complaints plus 10 of our own, including Tamil and Bengali messages, fraud, a product safety incident, a bulk academy order and EMI. It writes per-scenario CSVs and a summary report to `evaluation/`.
+The evaluation runs 20 labelled scenarios through the real model and retrieval: 6 reference complaints plus 14 of our own, including Tamil and Bengali messages, fraud, a product safety incident, a bulk academy order, EMI, an order cancellation and a question the documents do not cover. It writes per-scenario CSVs and a summary report to `evaluation/`.
+
+**Faithfulness (LLM judge):** after each reply, a stronger model (`gpt-4o`) lists the reply's factual claims and marks each one as supported or not by the evidence passages. The score is the share of supported claims, and every unsupported claim is listed in the report. Honest "not covered" replies are not scored; the source check covers them. This is on top of the checks that run on every live reply (citations, and every figure must appear in the cited passage).
 
 Latest results (`gpt-4o-mini`, threshold 0.70, relevance gate 0.40). Full reports: [round robin](evaluation/report_round_robin.md) · [selector](evaluation/report_selector.md)
 
 | Metric | Round robin | Selector |
 |---|---|---|
-| Category correct | 16/16 | 16/16 |
-| Resolved / Escalated decision correct | 16/16 | 15/16 |
-| Expected knowledge source used (or honest no-match) | 16/16 | 16/16 |
-| Escalation precision · recall | 4/4 · 4/4 | 4/5 · 4/4 |
-| Language detected (Tamil, Bengali) | 2/2 | 2/2 |
-| Average confidence | 0.87 | 0.85 |
-| Average time · tokens per ticket | 10.3 s · 8,203 | 11.2 s · 9,169 |
-| Retrieval hit-rate@5 · MRR | 1.0 · 1.0 | 1.0 · 1.0 |
+| Category correct | 20/20 | 20/20 |
+| Resolved / Escalated decision correct | 20/20 | 19/20 |
+| Expected knowledge source used (or honest no-match) | 20/20 | 20/20 |
+| Escalation precision · recall | 5/5 · 5/5 | 5/6 · 5/5 |
+| Language detected (Tamil, Bengali) | 3/3 | 3/3 |
+| Faithfulness (LLM judge) | 1.00 · 18/18 fully supported | 0.97 · 16/18 fully supported |
+| Average confidence | 0.86 | 0.84 |
+| Average time · tokens per ticket | 10.4 s · 8,524 | 12.1 s · 9,308 |
+| Retrieval hit-rate@5 · MRR | 1.0 · 0.97 | 1.0 · 0.97 |
 
-In the selector run, the Tamil size-exchange scenario (OWN-2) scored 0.69, just under the 0.70 threshold, because one of its two factual lines carried no citation; it was escalated to a person instead of resolved. It passed in the round-robin run and in earlier runs.
+In the selector run, the broken-blender scenario (PDF-4) scored 0.68, just under the 0.70 threshold, and was escalated to a person instead of resolved. The judge flagged two small unsupported lines in that run (asking for an order ID "since it was due yesterday", and the return path wording); both are listed in the report.
 
 These scenarios were also used while calibrating thresholds and fixing scoring issues, so they measure regressions, not unseen performance. LLM outputs vary between runs.
 

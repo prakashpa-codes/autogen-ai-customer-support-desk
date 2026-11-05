@@ -4,7 +4,9 @@
     python evaluate.py --mode selector       # same scenarios with SelectorGroupChat
     python evaluate.py --only PDF-5 OWN-2    # a subset
     python evaluate.py --retrieval-only      # retrieval metrics only (embeddings, no chat model)
+    python evaluate.py --no-judge            # skip the LLM-judge faithfulness check
 
+Each reply is also scored by an LLM judge: what share of its claims the evidence passages support.
 Writes evaluation/results_<mode>.csv, evaluation/report_<mode>.md and evaluation/retrieval_results.csv.
 Runs use a separate store in evaluation/run/, so the live ticket log is not touched.
 """
@@ -15,11 +17,16 @@ import argparse
 import asyncio
 import csv
 import json
+import os
 import shutil
 import statistics
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+
+from autogen_core.models import SystemMessage, UserMessage
+from autogen_ext.models.openai import OpenAIChatCompletionClient
+from pydantic import BaseModel, Field
 
 from config import ROOT, settings
 from core.orders import OrderBook
@@ -30,6 +37,47 @@ from team import create_model_client, run_ticket
 
 EVAL_DIR = ROOT / "evaluation"
 SCENARIOS = json.loads((EVAL_DIR / "scenarios.json").read_text(encoding="utf-8"))
+
+JUDGE_MODEL = os.getenv("JUDGE_MODEL", "gpt-4o")  # a stronger model than the one that wrote the reply
+
+JUDGE_PROMPT = """You check a customer support reply for faithfulness to the evidence it was written from.
+Extract each factual claim the reply makes about the company or the customer's order: policies, steps,
+amounts, time limits, order details, product facts. For each one, decide whether the EVIDENCE states it
+or it follows directly from the evidence (same meaning in other words counts as supported), and give the
+id of the supporting passage.
+Do NOT list as claims: greetings, apologies, empathy, offers of further help, questions asking the customer
+for details, restating what the customer said, or honest statements that information is not available.
+The reply may be in any language; judge its meaning."""
+
+
+class Claim(BaseModel):
+    claim: str = Field(description="The claim, quoted briefly")
+    supported: bool
+    passage_id: str = Field(description="Supporting passage id such as S1 or O1, or empty if unsupported")
+
+
+class Faithfulness(BaseModel):
+    claims: list[Claim]
+
+
+async def judge_faithfulness(ctx: TicketContext) -> tuple[float | str, str]:
+    """LLM judge: share of the reply's factual claims supported by the evidence ("n/a" for honest no-match)."""
+    if ctx.no_match or not ctx.evidence:
+        return "n/a", ""  # nothing to be faithful to; the honest-reply check is source_ok
+    evidence = "\n\n".join(f"[{p.id}] {p.source} > {p.section}\n{p.text}" for p in ctx.evidence)
+    client = OpenAIChatCompletionClient(model=JUDGE_MODEL, api_key=settings.openai_api_key, temperature=0)
+    try:
+        result = await client.create(
+            [SystemMessage(content=JUDGE_PROMPT),
+             UserMessage(content=f"CUSTOMER MESSAGE:\n{ctx.complaint}\n\nEVIDENCE:\n{evidence}\n\n"
+                                 f"REPLY:\n{ctx.reply or ctx.customer_reply}", source="evaluator")],
+            json_output=Faithfulness,
+        )
+    finally:
+        await client.close()
+    claims = Faithfulness.model_validate_json(result.content).claims
+    score = sum(c.supported for c in claims) / len(claims) if claims else 1.0
+    return round(score, 2), "; ".join(c.claim for c in claims if not c.supported)
 
 
 def retrieval_eval(kb: KnowledgeBase, scenarios: list[dict], k: int) -> tuple[list[dict], dict]:
@@ -57,7 +105,7 @@ def retrieval_eval(kb: KnowledgeBase, scenarios: list[dict], k: int) -> tuple[li
     return rows, summary
 
 
-async def run_scenario(s: dict, kb: KnowledgeBase, store: TicketStore, mode: str) -> dict[str, Any]:
+async def run_scenario(s: dict, kb: KnowledgeBase, store: TicketStore, mode: str, judge: bool) -> dict[str, Any]:
     created = store.create_ticket(
         s["complaint"], channel=s["channel"], customer_name=s.get("customer_name", ""), order_id=s.get("order_id", ""),
         subject=s.get("subject", ""),
@@ -105,11 +153,16 @@ async def run_scenario(s: dict, kb: KnowledgeBase, store: TicketStore, mode: str
         "urgency_ok": "" if "urgency" not in exp else int(t is not None and t.urgency == exp["urgency"]),
         "sentiment_ok": "" if "sentiment" not in exp else int(t is not None and t.sentiment == exp["sentiment"]),
         "language_ok": "" if "language" not in exp else int(t is not None and exp["language"].lower() in t.language.lower()),
+        "faithfulness": "",
+        "unsupported_claims": "",
         "reply": ctx.customer_reply,
     }
+    if judge:
+        row["faithfulness"], row["unsupported_claims"] = await judge_faithfulness(ctx)
     mark = "PASS" if row["category_ok"] and row["status_ok"] and row["source_ok"] else "CHECK"
+    faith = f"  faith {row['faithfulness']}" if judge else ""
     print(f"[{mark}] {s['id']:<7} {row['category']:<9} {row['urgency']:<6} {row['sentiment']:<10} "
-          f"{row['status']:<9} conf {row['confidence']:.2f}  {row['kb_sources']}")
+          f"{row['status']:<9} conf {row['confidence']:.2f}{faith}  {row['kb_sources']}")
     return row
 
 
@@ -123,6 +176,10 @@ def write_report(rows: list[dict], retrieval: dict, mode: str) -> None:
     tp = sum(1 for r in rows if r["status"] == "Escalated" and r["id"] in escalate_expected)
     fp = sum(1 for r in rows if r["status"] == "Escalated" and r["id"] not in escalate_expected)
     fn = sum(1 for r in rows if r["status"] != "Escalated" and r["id"] in escalate_expected)
+    judged = [r["faithfulness"] for r in rows if isinstance(r["faithfulness"], float)]
+    faithfulness = (f"{statistics.mean(judged):.2f} average · {sum(f == 1.0 for f in judged)}/{len(judged)} replies fully supported "
+                    f"(judge `{JUDGE_MODEL}`; honest no-match replies not scored)"
+                    if judged else "not run")
     lines = [
         "# Evaluation report",
         "",
@@ -142,19 +199,25 @@ def write_report(rows: list[dict], retrieval: dict, mode: str) -> None:
         f"| Language detected (where labelled) | {_rate(rows, 'language_ok')} |",
         f"| Escalation precision / recall | {tp}/{tp + fp} · {tp}/{tp + fn} |",
         f"| Average confidence | {statistics.mean(r['confidence'] for r in rows):.2f} |",
+        f"| Faithfulness (LLM judge) | {faithfulness} |",
         f"| Average time per ticket | {statistics.mean(r['seconds'] for r in rows):.1f} s |",
         f"| Average tokens per ticket | {statistics.mean(r['tokens'] for r in rows):,.0f} |",
         f"| Retrieval hit-rate@{settings.top_k} / MRR | {retrieval.get(f'hit_rate@{settings.top_k}')} / {retrieval.get('mrr')} |",
         "",
         "## Per scenario",
         "",
-        "| ID | Category | Urgency | Sentiment | Status | Confidence | Sources | Checks |",
-        "|---|---|---|---|---|---|---|---|",
+        "| ID | Category | Urgency | Sentiment | Status | Confidence | Faithfulness | Sources | Checks |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
     for r in rows:
         checks = "✓" if r["category_ok"] and r["status_ok"] and r["source_ok"] else "✗"
+        faith = r["faithfulness"] if r["faithfulness"] != "" else "-"
         lines.append(f"| {r['id']} | {r['category']} | {r['urgency']} | {r['sentiment']} | {r['status']} | "
-                     f"{r['confidence']:.2f} | {r['kb_sources']} | {checks} |")
+                     f"{r['confidence']:.2f} | {faith} | {r['kb_sources']} | {checks} |")
+    unsupported = [r for r in rows if r["unsupported_claims"]]
+    if unsupported:
+        lines += ["", "## Claims the judge found unsupported", ""]
+        lines += [f"- **{r['id']}**: {r['unsupported_claims']}" for r in unsupported]
     (EVAL_DIR / f"report_{mode}.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -172,6 +235,7 @@ async def main() -> None:
     parser.add_argument("--mode", choices=["round_robin", "selector"], default=settings.team_mode)
     parser.add_argument("--only", nargs="*", help="Scenario IDs to run")
     parser.add_argument("--retrieval-only", action="store_true")
+    parser.add_argument("--no-judge", action="store_true", help="Skip the LLM-judge faithfulness check")
     args = parser.parse_args()
 
     scenarios = [s for s in SCENARIOS if not args.only or s["id"] in args.only]
@@ -189,7 +253,7 @@ async def main() -> None:
     store = TicketStore(run_dir / "eval.db", run_dir / "logs")
     rows = []
     for s in scenarios:
-        rows.append(await run_scenario(s, kb, store, args.mode))
+        rows.append(await run_scenario(s, kb, store, args.mode, judge=not args.no_judge))
     store.close()
 
     write_csv(EVAL_DIR / f"results_{args.mode}.csv", rows)
